@@ -1,0 +1,42 @@
+-
+  title: 【主流程-加购】-正常查询出商品并加入到购物车
+  module: query&add_to_cart
+  apipath: soulmiaApi/common/baseapi.yaml
+  teststeps:
+  - name: 查询
+    api: cart_list
+    params: {"email": "func:getattr(HandleRelateData,email)", "password": "func:getattr(HandleRelateData,password)"}
+    extract: {"$..goods_number": "goods_number", "$..password": "password"}
+    validate_content:
+      msg: {"$..statusCode": 200,"$..status": "success","$..token":True}
+      validate_func: {"$..token":True}
+    validate_result: {"reslut":True}
+  -
+    name: 加购
+    api: add_to_cart
+    params: {"goods_number": "1", "goods_id": "#goods_id#"}
+    setparam: [email,password]
+    extract: {"$..email": "email", "$..password": "password"}
+    validate_content:
+      msg: {"$..statusCode": 200,"status": "success","$..token":True}
+      validate_func: {"goods_number":"self.add_to_cart_assert(res)"}
+-
+  title: 【主流程-加购】-未填写数量加购
+  url: api/cart/add-to-cart
+  module: add_to_cart
+  method: POST
+  step:
+    type: func
+    func: {'object':CartGoodsDoneDatas,'func': goods_query}
+    extract: {"$..goods_id": "goods_id"}
+  param: {"goods_number": "", "goods_id": "#goods_id#"}
+  expect_content:
+   msg: {"status": "error", "statusCode": 422}
+-
+  title: 【主流程-加购】-未填写goods_id加购
+  url: api/cart/add-to-cart
+  module: add_to_cart
+  method: POST
+  param: {"goods_number": "1", "goods_id": ""}
+  expect_content:
+   msg: {"status": "error", "statusCode": 422}

@@ -1,0 +1,9 @@
+register:
+  url: api/register
+  method: POST
+  param: xxx
+  token: xxx
+login:
+  url: "api/login"
+  method: POST
+  param: xxx

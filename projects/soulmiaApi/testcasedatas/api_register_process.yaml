@@ -1,0 +1,20 @@
+-
+  title: 【主流程】注册登录流程验证
+  module: register&login
+  apipath: soulmiaApi/common/baseapi.yaml
+  teststeps:
+  -
+    name: 注册
+    api: register
+    params: {"email": "func:HandleRandomData().rand_email()", "password": "123456"}
+    setparam: [email,password]
+    extract: {"$..email": "email", "$..password": "password"}
+    validate_content:
+      msg: {"$..statusCode": 200,"status": "success","$..token":True}
+      validate_func: {"$..token":True}
+  - name: 登录
+    api: login
+    params: {"email": "func:getattr(HandleRelateData,email)", "password": "func:getattr(HandleRelateData,password)"}
+    validate_content:
+      msg: {"$..statusCode": 200,"$..status": "success","$..token":True}
+      validate_func: {"$..token":True}

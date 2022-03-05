@@ -1,0 +1,20 @@
+-
+  title: 【主流程】注册登录流程验证 #用例名称
+  module: register&login #场景相关接口名称
+  apipath: soulmiaApi/common/baseapi.yaml #api模板文件所在路径
+  teststeps: #测试接口调用步骤
+  -
+    name: 注册  #接口名称
+    api: register #api名称
+    params: {"email": "func:HandleRandomData().rand_email()", "password": "123456"} #接口传参，可自定义方法传参
+    setparam: [email,password] #需要设置的参数
+    extract: {"$..email": "email", "$..password": "password"} #需要提取的参数
+    validate_content: #自定义断言设置
+      msg: {"$..statusCode": 200,"status": "success","$..token":True} #接口返回值断言
+      validate_func: {"$..token":True} #自定义方法进行业务逻辑断言
+  - name: 登录
+    api: login
+    params: {"email": "func:getattr(HandleRelateData,email)", "password": "func:getattr(HandleRelateData,password)"}
+    validate_content:
+      msg: {"$..statusCode": 200,"$..status": "success","$..token":True}
+      validate_func: {"$..token":True}

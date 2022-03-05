@@ -1,0 +1,9 @@
+.idea
+__pycache__
+.pytest_cache
+lixxi.py
+logs
+main.py
+reports
+registed_count.yaml
+initcases.py

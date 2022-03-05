@@ -1,0 +1,33 @@
+db_conf:
+ host:
+ user:
+ password:
+ port: 3306
+url:
+beta_url:
+globale_url:
+headers:
+  Host:
+  APP-VERSION: v1.1.2
+  Accept: '*/*'
+  Proxy-Connection:
+  DEVICE-ID:
+  APP-FROM: ios
+  Accept-Language:
+  Accept-Encoding:
+  User-Agent:
+  LANG:
+  CURRENCY-CODE:
+  IS-DEBUG:
+  Connection: keep-alive
+beta_login_data:
+  email:
+  password:
+globale_login_data:
+  email:
+  password: "123456"
+TestweixinReportUrl:
+# 中台接口配置
+center:
+ headers: {Content-Type: application/json}
+ method: POST
